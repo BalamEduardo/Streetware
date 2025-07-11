@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className="bg-brand text-white">
         <Navbar />
         {/* Padding para que el contenido no quede debajo del navbar fijo */}
-        <main className="pt-16 min-h-screen">{children}</main>
+        <main className="min-h-screen">{children}</main>
         
         <Footer />
       </body>
