@@ -3,29 +3,122 @@ import Link from 'next/link';
 
 export default function HeroSection() {
   return (
-    <section id="inicio" className="min-h-[80vh] flex flex-col items-center justify-center text-center px-4">
-      <h1 className="text-4xl md:text-6xl font-display mb-6 text-brand-accent tracking-widest drop-shadow">
+    <section 
+      id="inicio" 
+      className="
+      min-h-screen
+      relative
+      flex flex-col items-center justify-center
+      text-center
+      px-4 sm:px-6
+      bg-[url('/images/hero/Mobile_hero.jpg')] bg-cover bg-center bg-no-repeat
+      md:bg-none md:bg-brand
+      before:absolute before:inset-0 before:bg-black/40 before:z-0
+      md:before:hidden
+      "
+    >
+      {/* Overlay para mejorar legibilidad en mobile */}
+      <div className="relative z-10 w-full max-w-4xl mx-auto">
+      
+      {/* Título Principal - Mobile First */}
+      <h1 className="
+        text-3xl leading-tight
+        sm:text-4xl sm:leading-tight
+        md:text-5xl md:leading-tight
+        lg:text-6xl lg:leading-tight
+        xl:text-7xl xl:leading-tight
+        font-display
+        mb-4 sm:mb-6 md:mb-8
+        text-white
+        md:text-brand-accent
+        tracking-wider
+        drop-shadow-lg md:drop-shadow-none
+      ">
         STREETWARE<br />
         <span className="text-brand-yellow">DROP</span> SEASON
       </h1>
-      <p className="font-body text-lg md:text-2xl max-w-2xl text-white/90 mb-8">
+
+      {/* Subtítulo - Mobile First */}
+      <p className="
+        text-sm leading-relaxed
+        sm:text-base sm:leading-relaxed
+        md:text-lg md:leading-relaxed
+        lg:text-xl lg:leading-relaxed
+        xl:text-2xl xl:leading-relaxed
+        font-body
+        max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl
+        mx-auto
+        text-white/95
+        md:text-white/90
+        mb-6 sm:mb-8 md:mb-10
+        drop-shadow-md md:drop-shadow-none
+      ">
         Ropa y arte de edición limitada.<br />
         Cada drop cuenta una historia.<br />
-        <span className="text-brand-yellow">¡Colecciones exclusivas, nunca re-stock!</span>
+        <span className="text-brand-yellow font-semibold">
+        ¡Colecciones exclusivas, nunca re-stock!
+        </span>
       </p>
-      <div className="flex flex-col md:flex-row gap-4">
+
+      {/* Botones CTA - Mobile First */}
+      <div className="
+        flex flex-col gap-3
+        sm:gap-4
+        md:flex-row md:gap-6
+        md:justify-center
+        w-full max-w-sm sm:max-w-md md:max-w-none
+        mx-auto
+      ">
         <Link
-          href="#productos"
-          className="px-8 py-3 bg-brand-accent text-white rounded-lg font-bold uppercase hover:bg-brand-yellow transition"
+        href="#productos"
+        className="
+          w-full md:w-auto
+          px-6 py-3
+          sm:px-8 sm:py-4
+          md:px-10 md:py-4
+          bg-brand-accent
+          text-white
+          text-sm sm:text-base md:text-lg
+          font-bold
+          uppercase
+          tracking-wide
+          rounded-lg
+          shadow-lg
+          hover:bg-brand-yellow
+          hover:shadow-xl
+          transition-all duration-300
+          active:scale-95
+        "
         >
-          Ver colección
+        Ver colección
         </Link>
+        
         <Link
-          href="#nosotros"
-          className="px-8 py-3 border-2 border-brand-accent text-brand-accent rounded-lg font-bold uppercase hover:bg-brand-accent hover:text-white transition"
+        href="#nosotros"
+        className="
+          w-full md:w-auto
+          px-6 py-3
+          sm:px-8 sm:py-4
+          md:px-10 md:py-4
+          border-2 border-white
+          md:border-brand-accent
+          text-white
+          md:text-brand-accent
+          text-sm sm:text-base md:text-lg
+          font-bold
+          uppercase
+          tracking-wide
+          rounded-lg
+          shadow-lg
+          hover:bg-white hover:text-brand
+          md:hover:bg-brand-accent md:hover:text-white
+          transition-all duration-300
+          active:scale-95
+        "
         >
-          Saber más
+        Saber más
         </Link>
+      </div>
       </div>
     </section>
   );
