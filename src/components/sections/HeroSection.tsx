@@ -5,16 +5,7 @@ export default function HeroSection() {
   return (
     <section 
       id="inicio" 
-      className="
-        min-h-screen
-        relative
-        flex flex-col items-center justify-center
-        text-center
-        px-4 sm:px-6
-        bg-[url('/images/hero/Mobile_hero.jpg')] bg-cover bg-center bg-no-repeat
-        md:bg-brand
-        overflow-hidden
-      "
+      className="min-h-screen relative flex flex-col items-center justify-center text-center px-4 sm:px-6 bg-[url('/images/hero/Mobile_hero.jpg')] bg-cover bg-center bg-no-repeat md:bg-brand overflow-hidden"
     >
       {/* Video de fondo para Desktop */}
       <video
@@ -41,71 +32,82 @@ export default function HeroSection() {
       <div className="
         hidden md:block
         absolute inset-0 z-10
-        bg-black/30
+        bg-black/40
+        
       " />
 
       {/* Blur Layer - Aplicado sobre los overlays */}
       <div className="
         absolute inset-0 z-20
-        backdrop-blur-[0.5px]
-        md:backdrop-blur-[1px]
+        backdrop-saturate-[150%]
+        backdrop-blur-[3px]
       " />
 
       {/* Contenido Principal */}
       <div className="relative z-30 w-full max-w-4xl mx-auto">
       
-      {/* Título Principal - Mobile First */}
-      <h1 className="
-      text-3xl leading-tight
-      sm:text-4xl sm:leading-tight
-      md:text-5xl md:leading-tight
-      lg:text-6xl lg:leading-tight
-      xl:text-7xl xl:leading-tight
-      font-display
-      mb-4 sm:mb-6 md:mb-8
-      text-white
-      md:text-brand-accent
-      tracking-wider
-      drop-shadow-lg md:drop-shadow-none
-      ">
-      STREETWARE<br />
-      <span className="text-brand-yellow">DROP</span> SEASON
+      {/* Título Principal - Mobile First + Landscape Responsive */}
+      <h1 
+        className="
+          hero-landscape-title
+          text-3xl leading-tight
+          sm:text-4xl sm:leading-tight
+          md:text-5xl md:leading-tight
+          lg:text-6xl lg:leading-tight
+          xl:text-7xl xl:leading-tight
+          font-display
+          mb-4 sm:mb-6 md:mb-8
+          text-white
+          md:text-brand-accent
+          tracking-wider
+          drop-shadow-lg md:drop-shadow-none
+        "
+      >
+        STREETWARE<br />
+        <span className="text-brand-yellow">DROP</span> SEASON
       </h1>
 
-      {/* Subtítulo - Mobile First */}
-      <p className="
-      text-sm leading-relaxed
-      sm:text-base sm:leading-relaxed
-      md:text-lg md:leading-relaxed
-      lg:text-xl lg:leading-relaxed
-      xl:text-2xl xl:leading-relaxed
-      font-body
-      max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl
-      mx-auto
-      text-white/95
-      md:text-white/90
-      mb-6 sm:mb-8 md:mb-10
-      drop-shadow-md md:drop-shadow-none
-      ">
-      Ropa y arte de edición limitada.<br />
-      Cada drop cuenta una historia.<br />
-      <span className="text-brand-yellow font-semibold">
-      ¡Colecciones exclusivas, nunca re-stock!
-      </span>
+      {/* Subtítulo - Mobile First + Landscape Responsive */}
+      <p 
+        className="
+          hero-landscape-subtitle
+          text-sm leading-relaxed
+          sm:text-base sm:leading-relaxed
+          md:text-lg md:leading-relaxed
+          lg:text-xl lg:leading-relaxed
+          xl:text-2xl xl:leading-relaxed
+          font-body
+          max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl
+          mx-auto
+          text-white/95
+          md:text-white/90
+          mb-6 sm:mb-8 md:mb-10
+          drop-shadow-md md:drop-shadow-none
+        "
+      >
+        Ropa y arte de edición limitada.<br />
+        Cada drop cuenta una historia.<br />
+        <span className="text-brand-yellow font-semibold">
+          ¡Colecciones exclusivas, nunca re-stock!
+        </span>
       </p>
 
-      {/* Botones CTA - Mobile First */}
-      <div className="
-      flex flex-col gap-3
-      sm:gap-4
-      md:flex-row md:gap-6
-      md:justify-center
-      w-full max-w-sm sm:max-w-md md:max-w-none
-      mx-auto
-      ">
+      {/* Botones CTA - Mobile First + Landscape Responsive */}
+      <div 
+        className="
+          hero-landscape-buttons
+          flex flex-col gap-3
+          sm:gap-4
+          md:flex-row md:gap-6
+          md:justify-center
+          w-full max-w-sm sm:max-w-md md:max-w-none
+          mx-auto
+        "
+      >
       <Link
       href="#productos"
       className="
+        hero-landscape-button
         w-full md:w-auto
         px-6 py-3
         sm:px-8 sm:py-4
@@ -130,6 +132,7 @@ export default function HeroSection() {
       <Link
       href="#nosotros"
       className="
+        hero-landscape-button
         w-full md:w-auto
         px-6 py-3
         sm:px-8 sm:py-4
