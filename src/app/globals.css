@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap');
 
 :root {
   --background: #ffffff;
@@ -10,6 +11,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-streetwear: var(--font-sedgwick-ave), "Sedgwick Ave Display", cursive;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -76,5 +78,12 @@ body {
     font-size: 0.875rem !important;
    
   }
+}
+
+/* Clase personalizada para la fuente Sedgwick Ave Display */
+.font-streetwear-logo {
+  font-family: "Sedgwick Ave Display", var(--font-sedgwick-ave), cursive !important;
+  font-weight: 400;
+  font-style: normal;
 }
 

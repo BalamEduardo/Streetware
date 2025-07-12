@@ -16,6 +16,7 @@ module.exports = {
       fontFamily: {
         display: ['"Bebas Neue"', "Oswald", "sans-serif"],
         body: ["Urbanist", "Montserrat", "sans-serif"],
+        streetwear: ["var(--font-sedgwick-ave)", "cursive"],
       },
     },
   },

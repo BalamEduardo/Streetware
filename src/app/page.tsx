@@ -3,10 +3,10 @@ import React from 'react';
 import HeroSection from '@/components/sections/HeroSection';
 import DropsSection from '@/components/sections/DropsSection';
 import ProductsSection from '@/components/sections/ProductsSection';
+import LookbookSection from '@/components/sections/LookbookSection';
 import SizingSection from '@/components/sections/SizingSection';
 import AboutSection from '@/components/sections/AboutSection';
 import ContactSection from '@/components/sections/ContactSection';
-import CartSection from '@/components/sections/CartSection';
 
 export default function HomePage() {
   return (
@@ -14,10 +14,10 @@ export default function HomePage() {
       <HeroSection />
       <DropsSection />
       <ProductsSection />
+      <LookbookSection />
       <SizingSection />
       <AboutSection />
       <ContactSection />
-      <CartSection />
     </>
   );
 }
