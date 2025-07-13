@@ -1,9 +1,16 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ImageSlider from '../ui/ImageSlider';
+import ProductModal from '../ui/ProductModal';
+import { useProductModal, Product } from '../../hooks/useProductModal';
 
 export default function DropsSection() {
+  // Hook para manejar el modal
+  const { isOpen, products, title, subtitle, openModal, closeModal } = useProductModal();
+
   // Drop actual - solo el más reciente
   const currentDrop = {
     id: 1,
@@ -35,6 +42,109 @@ export default function DropsSection() {
     ]
   };
 
+  // Productos de la colección Urban Rebellion
+  const collectionProducts: Product[] = [
+    {
+      id: 'ur-hoodie-01',
+      name: 'Urban Rebellion Hoodie',
+      price: '$1,299',
+      description: 'Hoodie premium con diseño gráfico exclusivo inspirado en el arte urbano. Confeccionado en algodón orgánico de alta calidad.',
+      category: 'Hoodies',
+      isNew: true,
+      isAvailable: true,
+      images: [
+        {
+          src: '/images/drops/DropsProducts/UrbanRebelion/UR1.jpg',
+          alt: 'Urban Rebellion Hoodie - Vista frontal'
+        }
+      ]
+    },
+    {
+      id: 'ur-tshirt-01',
+      name: 'Urban Rebellion Tee',
+      price: '$899',
+      description: 'Camiseta de edición limitada con estampado artístico. Perfecta para expresar tu lado rebelde.',
+      category: 'Camisetas',
+      isNew: true,
+      isAvailable: true,
+      images: [
+        {
+          src: '/images/drops/DropsProducts/UrbanRebelion/UR2.jpg',
+          alt: 'Urban Rebellion Tee - Vista frontal'
+        }
+      ]
+    },
+    {
+      id: 'ur-jacket-01',
+      name: 'Urban Rebellion Jacket',
+      price: '$1,899',
+      description: 'Chaqueta de mezclilla customizada con parches exclusivos. Diseño único que no pasará desapercibido.',
+      category: 'Chaquetas',
+      isNew: true,
+      isAvailable: true,
+      images: [
+        {
+          src: '/images/drops/DropsProducts/UrbanRebelion/U3.jpg',
+          alt: 'Urban Rebellion Jacket - Vista completa'
+        }
+      ]
+    },
+    {
+      id: 'ur-pants-01',
+      name: 'Urban Rebellion Pants',
+      price: '$1,399',
+      description: 'Pantalones cargo con detalles únicos y múltiples bolsillos. Comodidad y estilo urbano.',
+      category: 'Pantalones',
+      isNew: false,
+      isAvailable: false, // Agotado para mostrar variedad
+      images: [
+        {
+          src: '/images/drops/DropsProducts/UrbanRebelion/UR1.jpg',
+          alt: 'Urban Rebellion Pants - Vista lateral'
+        }
+      ]
+    },
+    {
+      id: 'ur-accessories-01',
+      name: 'Urban Rebellion Cap',
+      price: '$599',
+      description: 'Gorra snapback con bordado exclusivo. El complemento perfecto para tu outfit urbano.',
+      category: 'Accesorios',
+      isNew: true,
+      isAvailable: true,
+      images: [
+        {
+          src: '/images/drops/DropsProducts/UrbanRebelion/UR2.jpg',
+          alt: 'Urban Rebellion Cap - Vista frontal'
+        }
+      ]
+    },
+    {
+      id: 'ur-shoes-01',
+      name: 'Urban Rebellion Sneakers',
+      price: '$2,299',
+      description: 'Sneakers de edición limitada colaboración exclusiva. Diseño futurista con toques urbanos.',
+      category: 'Calzado',
+      isNew: true,
+      isAvailable: true,
+      images: [
+        {
+          src: '/images/drops/DropsProducts/UrbanRebelion/U3.jpg',
+          alt: 'Urban Rebellion Sneakers - Par completo'
+        }
+      ]
+    }
+  ];
+
+  // Función para abrir el modal con la colección completa
+  const handleViewCollection = () => {
+    openModal(
+      collectionProducts,
+      currentDrop.title,
+      `${currentDrop.subtitle} • ${collectionProducts.length} productos exclusivos`
+    );
+  };
+
   const getStatusStyles = (status: string) => {
     switch (status) {
       case 'Disponible':
@@ -53,7 +163,7 @@ export default function DropsSection() {
     <section
       id="drops"
       className="
-        py-12 sm:py-16 md:py-20 lg:py-24
+        py-12 sm:py-16 md:py-16 lg:py-16
         px-4 sm:px-6 lg:px-8
         bg-brand
         relative
@@ -72,7 +182,7 @@ export default function DropsSection() {
       >
         <Image
           src="/images/drops/Background-Drops.jpg"
-          alt=""
+          alt="Fondo decorativo de la sección drops"
           fill
           className="object-cover object-center opacity-30 blur-xs"
           draggable={false}
@@ -180,7 +290,7 @@ export default function DropsSection() {
                       px-2 py-1 sm:px-4 sm:py-2
                       text-xs sm:text-sm 
                       font-bold
-                      bg-[#ff9345a4]
+                      bg-[#ff3232]
                       text-brand
                       rounded-full
                       backdrop-blur-md
@@ -334,8 +444,8 @@ export default function DropsSection() {
                   gap-2 sm:gap-3
                   mt-3 xs:mt-4 sm:mt-8
                 ">
-                  <Link
-                    href={`/drops/${currentDrop.id}`}
+                  <button
+                    onClick={handleViewCollection}
                     className="
                       flex-1
                       px-4 py-2.5
@@ -357,10 +467,11 @@ export default function DropsSection() {
                       active:scale-95
                       shadow-lg
                       hover:shadow-xl
+                      cursor-pointer
                     "
                   >
                     Ver Colección
-                  </Link>
+                  </button>
 
                   <button className="
                     flex-1
@@ -396,6 +507,7 @@ export default function DropsSection() {
             href="/drops"
             className="
               inline-flex items-center
+              mt-6
               px-6 py-3
               sm:px-8 sm:py-4
               md:px-10 md:py-4
@@ -413,7 +525,7 @@ export default function DropsSection() {
               group
             "
           >
-            <span className="mr-2">Drops Anteriores</span>
+            <span className="mr-2 ">Drops Anteriores</span>
             <svg
               className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
               fill="none"
@@ -430,6 +542,15 @@ export default function DropsSection() {
           </Link>
         </div>
       </div>
+
+      {/* Modal de Productos */}
+      <ProductModal
+        isOpen={isOpen}
+        onClose={closeModal}
+        products={products}
+        title={title}
+        subtitle={subtitle}
+      />
     </section>
   );
 }

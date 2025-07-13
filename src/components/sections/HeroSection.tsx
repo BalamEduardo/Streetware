@@ -12,7 +12,7 @@ export default function HeroSection() {
       <div className="md:hidden absolute inset-0 z-0">
         <Image
           src="/images/hero/Background_HeroMobile.jpg"
-          alt=""
+          alt="Imagen de fondo del hero para dispositivos móviles"
           fill
           className="object-cover object-center"
           priority={true}

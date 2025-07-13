@@ -26,7 +26,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-50 bg-brand text-white shadow backdrop-blur-xs">
+      <nav className="fixed top-0 left-0 w-full z-50  text-white shadow backdrop-blur-xs ">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           {/* Container principal del navbar */}
           <div className="flex items-center justify-between h-16">

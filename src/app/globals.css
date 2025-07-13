@@ -87,3 +87,170 @@ body {
   font-style: normal;
 }
 
+/* Animaciones para ProductModal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-out;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Estilos personalizados para pagination de Swiper en ProductModal */
+.swiper-pagination-bullet-product {
+  width: 8px !important;
+  height: 8px !important;
+  background: rgba(255, 255, 255, 0.4) !important;
+  border-radius: 50% !important;
+  opacity: 1 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+
+.swiper-pagination-bullet-product-active {
+  background: #FFD600 !important;
+  transform: scale(1.2) !important;
+}
+
+/* Product Modal Swiper Styles */
+.product-modal-swiper {
+  --swiper-navigation-size: 20px;
+  --swiper-theme-color: #fff;
+  height: 100%;
+}
+
+.product-modal-swiper .swiper-wrapper {
+  height: 100%;
+}
+
+.product-modal-swiper .swiper-slide {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Pagination styles - visible dots at bottom */
+.product-modal-swiper .swiper-pagination {
+  bottom: 15px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
+  z-index: 30 !important;
+  position: absolute !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.product-modal-swiper .swiper-pagination-bullet-product {
+  width: 10px !important;
+  height: 10px !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  opacity: 1 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  border-radius: 50% !important;
+  display: inline-block !important;
+}
+
+.product-modal-swiper .swiper-pagination-bullet-product-active {
+  background: #fff !important;
+  border-color: #fff !important;
+  transform: scale(1.2) !important;
+}
+
+.product-modal-swiper .swiper-button-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Mobile specific optimizations */
+@media (max-width: 1023px) {
+  .product-modal-swiper .swiper-pagination {
+    bottom: 10px !important;
+  }
+  
+  .product-modal-swiper .swiper-pagination-bullet-product {
+    width: 8px !important;
+    height: 8px !important;
+  }
+}
+
+/* Smooth transitions for product slides */
+.product-modal-swiper .swiper-slide {
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-modal-swiper .swiper-slide-active {
+  transform: scale(1);
+}
+
+.product-modal-swiper .swiper-slide-next,
+.product-modal-swiper .swiper-slide-prev {
+  transform: scale(0.98);
+}
+
+/* Remove default backdrop blur issues on mobile */
+@supports (-webkit-backdrop-filter: blur()) or (backdrop-filter: blur()) {
+  @media (min-width: 640px) {
+    .modal-backdrop-blur {
+      backdrop-filter: blur(8px);
+    }
+  }
+}
+
+/* Ensure proper text rendering on mobile */
+@media (max-width: 1023px) {
+  .product-modal-text {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* Utilidades adicionales */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+/* Estilos para kbd element */
+kbd {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
