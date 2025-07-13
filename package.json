@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "validate-images": "node scripts/validate-images.js",
+    "optimize-check": "npm run validate-images && echo '✅ Imágenes optimizadas correctamente'"
   },
   "dependencies": {
     "next": "15.3.5",

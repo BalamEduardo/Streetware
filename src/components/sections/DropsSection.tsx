@@ -23,7 +23,7 @@ export default function DropsSection() {
         alt: "Urban Rebellion - Camiseta estampada con arte urbano"
       },
       {
-        id: "ur2", 
+        id: "ur2",
         src: "/images/drops/DropsProducts/UrbanRebelion/UR2.jpg",
         alt: "Urban Rebellion - Hoodie con diseño gráfico exclusivo"
       },
@@ -49,9 +49,9 @@ export default function DropsSection() {
   };
 
   return (
-    
-    <section 
-      id="drops" 
+
+    <section
+      id="drops"
       className="
         py-12 sm:py-16 md:py-20 lg:py-24
         px-4 sm:px-6 lg:px-8
@@ -74,16 +74,18 @@ export default function DropsSection() {
           src="/images/drops/Background-Drops.jpg"
           alt=""
           fill
-          className="object-cover object-center opacity-30"
+          className="object-cover object-center opacity-30 blur-xs"
           draggable={false}
           priority={false}
-          quality={60}
+          quality={40}
+          sizes="100vw"
+         
         />
       </div>
 
       {/* Contenedor principal */}
       <div className="max-w-7xl mx-auto">
-        
+
         {/* Header de la sección */}
         <div className="
           text-center 
@@ -101,7 +103,7 @@ export default function DropsSection() {
           ">
             NUEVO DROP
           </h2>
-          
+
           <p className="
             text-sm leading-relaxed
             sm:text-base sm:leading-relaxed
@@ -122,22 +124,17 @@ export default function DropsSection() {
 
         {/* Featured Drop Card - Diseño profesional */}
         <div className="
-          max-w-5xl mx-auto
-          mb-8 sm:mb-12 md:mb-16
+          max-w-3xl mx-auto
+          mb-4 sm:mb-6 md:mb-8
         ">
           <div className="
             group
-            bg-neutral-900/95
-            backdrop-blur-lg
+            backdrop-blur-xs
             border border-white/10
             rounded-2xl
             overflow-hidden
-            shadow-2xl
-            hover:bg-neutral-900/98
-            hover:border-white/20
-            hover:shadow-3xl
             transition-all duration-500
-            hover:scale-[1.005]
+            hover:scale-105
           ">
             {/* Layout responsive: mobile stack, desktop side-by-side */}
             <div className="
@@ -148,21 +145,21 @@ export default function DropsSection() {
               <div className="
                 relative
                 w-full lg:w-3/5
-                min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]
+                min-h-[280px] sm:min-h-[320px] lg:min-h-[380px]
                 bg-gradient-to-br from-brand-accent/10 to-brand-yellow/10
                 overflow-hidden
               ">
-                <ImageSlider 
+                <ImageSlider
                   images={currentDrop.images}
-                  aspectRatio="aspect-[4/3] lg:aspect-[4/5]"
+                  aspectRatio="aspect-[4/3] sm:aspect-[5/4] lg:aspect-[4/5]"
                   className="w-full h-full"
                 />
-                
+
                 {/* Badges superpuestos */}
                 <div className="
                   absolute top-6 left-6
                   z-30
-                  flex flex-col gap-3
+                  flex flex-row gap-3
                 ">
                   <span className={`
                     inline-block
@@ -176,13 +173,13 @@ export default function DropsSection() {
                   `}>
                     {currentDrop.status}
                   </span>
-                  
+
                   {currentDrop.isNew && (
                     <span className="
                       inline-block
                       px-4 py-2
                       text-sm font-bold
-                      bg-brand-yellow/95
+                      bg-[#ff9345a4]
                       text-brand
                       rounded-full
                       backdrop-blur-md
@@ -196,56 +193,61 @@ export default function DropsSection() {
 
                 {/* Overlay de información de imagen */}
                 <div className="
-                  absolute bottom-6 right-6
+                  absolute bottom-4 right-4
                   z-30
-                  bg-black/50
-                  backdrop-blur-sm
-                  px-3 py-2
+                  bg-black/60
+                  backdrop-blur-md
+                  px-3 py-1.5
                   rounded-lg
-                  text-white/90
+                  text-white/95
                   text-xs
                   font-body
+                  font-medium
                   opacity-0
                   group-hover:opacity-100
-                  transition-opacity duration-300
+                  transition-all duration-300
+                  border border-white/20
+                  shadow-lg
                 ">
-                  {currentDrop.images.length} imágenes
+                  <div className="flex items-center gap-1.5">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    {currentDrop.images.length} fotos
+                  </div>
                 </div>
               </div>
 
               {/* Contenido del Drop */}
-              <div className="
-                w-full lg:w-2/5
-                p-6 sm:p-8 lg:p-10
-                flex flex-col justify-center
-                bg-neutral-900/50
-                backdrop-blur-sm
+              <div className="                
+                w-full lg:h-full lg:w-2/4
+                p-5 sm:p-6 lg:p-8
+                flex flex-col  justify-center
+                bg-neutral-900/30
               ">
                 {/* Header del Drop */}
-                <div className="mb-4 sm:mb-6">
+                <div className="mb-3 sm:mb-4">
                   <h3 className="
-                    text-2xl sm:text-3xl lg:text-4xl
+                    text-xl sm:text-2xl lg:text-3xl
                     font-display
                     text-white
                     tracking-wide
-                    mb-2 sm:mb-3
+                    mb-4
                     leading-tight
                   ">
                     {currentDrop.title}
                   </h3>
-                  
+
                   <p className="
-                    text-sm sm:text-base
-                    font-body
-                    text-brand-yellow
+                    text-sm sm:text-base lg:text-xs
                     uppercase
                     tracking-wider
-                    mb-3
+                    mb-2
                     font-semibold
                   ">
                     {currentDrop.subtitle}
                   </p>
-                  
+
                   <p className="
                     text-xs sm:text-sm
                     text-white/70
@@ -261,63 +263,64 @@ export default function DropsSection() {
 
                 {/* Descripción */}
                 <p className="
-                  text-sm sm:text-base lg:text-lg
+                  text-sm sm:text-base lg:text-base text-justify 
                   font-body
                   text-white/90
                   leading-relaxed
-                  mb-4 sm:mb-6
-                  line-clamp-3
+                  tracking-tight
+                  mb-3 sm:mb-4
                 ">
                   {currentDrop.description}
                 </p>
 
                 {/* Info del drop */}
                 <div className="
-                  flex flex-col sm:flex-row
-                  gap-4 sm:gap-6
-                  mb-6 sm:mb-8
-                  p-4
+                  grid grid-cols-2
+                  text-center
                   bg-white/5
                   rounded-xl
                   border border-white/10
                 ">
-                  <div className="flex-1">
+                  <div className=" py-2  lg:py-3 lg:px-2"> 
                     <span className="
-                      text-2xl sm:text-3xl
+                      text-base sm:text-lg lg:text-[1rem]
                       font-bold
                       text-brand-accent
                       block
-                      mb-1
+                      leading-tight
                     ">
                       {currentDrop.price}
                     </span>
                     <span className="
-                      text-xs sm:text-sm
+                      text-xs lg:text-xs
                       text-white/70
                       font-body
                       uppercase
                       tracking-wide
+                      leading-tight
                     ">
                       Precio inicial
                     </span>
                   </div>
-                  
-                  <div className="flex-1">
+
+                  <div className="py-2 px-1 lg:py-3 lg:px-2">
                     <span className="
-                      text-2xl sm:text-3xl
+                      text-base sm:text-lg lg:text-[1rem]
                       font-bold
                       text-brand-yellow
                       block
-                      mb-1
+                     
+                      leading-tight
                     ">
                       {currentDrop.pieces}
                     </span>
                     <span className="
-                      text-xs sm:text-sm
+                      text-xs lg:text-xs
                       text-white/70
                       font-body
                       uppercase
                       tracking-wide
+                      leading-tight
                     ">
                       Piezas únicas
                     </span>
@@ -326,24 +329,27 @@ export default function DropsSection() {
 
                 {/* Botones de acción */}
                 <div className="
-                  flex flex-col sm:flex-row
-                  gap-4
-                  mt-auto
+                  flex flex-col sm:flex-col
+                  gap-2 sm:gap-3
+                  mt-8
                 ">
                   <Link
                     href={`/drops/${currentDrop.id}`}
                     className="
                       flex-1
-                      px-8 py-4
-                      bg-brand-accent
+                      px-4 py-2.5
+                      sm:px-6 sm:py-3
+                      lg:px-5 lg:py-2.5
+                      bg-[#242424a4]
+                      backdrop-blur-xs
                       text-white
-                      text-sm sm:text-base
+                      text-xs sm:text-sm lg:text-sm
                       font-bold
                       uppercase
                       tracking-wide
                       rounded-xl
                       text-center
-                      hover:bg-brand-yellow
+                      hover:bg-[#ffffff3d]
                       hover:text-brand
                       transition-all duration-300
                       active:scale-95
@@ -353,13 +359,15 @@ export default function DropsSection() {
                   >
                     Ver Colección
                   </Link>
-                  
+
                   <button className="
                     flex-1
-                    px-8 py-4
+                    px-4 py-2.5
+                    sm:px-6 sm:py-3
+                    lg:px-5 lg:py-2.5
                     border-2 border-white/30
                     text-white
-                    text-sm sm:text-base
+                    text-xs sm:text-sm lg:text-sm
                     font-bold
                     uppercase
                     tracking-wide
@@ -370,7 +378,7 @@ export default function DropsSection() {
                     active:scale-95
                     backdrop-blur-sm
                   ">
-                    Agregar a Favoritos
+                    Favoritos
                   </button>
                 </div>
               </div>

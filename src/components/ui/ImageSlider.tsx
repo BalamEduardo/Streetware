@@ -65,7 +65,7 @@ export default function ImageSlider({
                 className="object-cover object-center"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority={index === 0} // Solo la primera imagen tiene prioridad
-                quality={85}
+                quality={80}
               />
             </div>
           </SwiperSlide>
