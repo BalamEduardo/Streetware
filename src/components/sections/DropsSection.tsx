@@ -157,14 +157,15 @@ export default function DropsSection() {
 
                 {/* Badges superpuestos */}
                 <div className="
-                  absolute top-6 left-6
+                  absolute top-4 left-4 sm:top-6 sm:left-6
                   z-30
-                  flex flex-row gap-3
+                  flex flex-row gap-1 sm:gap-2
                 ">
                   <span className={`
                     inline-block
-                    px-4 py-2
-                    text-sm font-bold
+                    px-2 py-1 sm:px-4 sm:py-2
+                    text-xs sm:text-sm 
+                    font-bold
                     rounded-full
                     backdrop-blur-md
                     border border-white/20
@@ -177,8 +178,9 @@ export default function DropsSection() {
                   {currentDrop.isNew && (
                     <span className="
                       inline-block
-                      px-4 py-2
-                      text-sm font-bold
+                      px-2 py-1 sm:px-4 sm:py-2
+                      text-xs sm:text-sm 
+                      font-bold
                       bg-[#ff9345a4]
                       text-brand
                       rounded-full
@@ -345,6 +347,7 @@ export default function DropsSection() {
                       text-white
                       text-xs sm:text-sm lg:text-sm
                       font-bold
+                      border-1 border-white/30
                       uppercase
                       tracking-wide
                       rounded-xl
