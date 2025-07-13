@@ -21,8 +21,7 @@ export interface UseProductModalReturn {
   isOpen: boolean;
   products: Product[];
   title: string;
-  subtitle: string;
-  openModal: (products: Product[], title?: string, subtitle?: string) => void;
+  openModal: (products: Product[], title?: string) => void;
   closeModal: () => void;
   toggleModal: () => void;
 }
@@ -31,16 +30,13 @@ export function useProductModal(): UseProductModalReturn {
   const [isOpen, setIsOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [title, setTitle] = useState('Colección');
-  const [subtitle, setSubtitle] = useState('Productos disponibles');
 
   const openModal = useCallback((
     modalProducts: Product[], 
-    modalTitle = 'Colección', 
-    modalSubtitle = 'Productos disponibles'
+    modalTitle = 'Colección'
   ) => {
     setProducts(modalProducts);
     setTitle(modalTitle);
-    setSubtitle(modalSubtitle);
     setIsOpen(true);
   }, []);
 
@@ -50,7 +46,6 @@ export function useProductModal(): UseProductModalReturn {
     setTimeout(() => {
       setProducts([]);
       setTitle('Colección');
-      setSubtitle('Productos disponibles');
     }, 300);
   }, []);
 
@@ -67,7 +62,6 @@ export function useProductModal(): UseProductModalReturn {
     isOpen,
     products,
     title,
-    subtitle,
     openModal,
     closeModal,
     toggleModal,

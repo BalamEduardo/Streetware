@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, A11y, Keyboard, EffectFade } from 'swiper/modules';
+import { Navigation, Pagination, A11y, Keyboard } from 'swiper/modules';
 import { Product } from '../../hooks/useProductModal';
 import type { Swiper as SwiperType } from 'swiper';
 
@@ -11,7 +11,6 @@ import type { Swiper as SwiperType } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import 'swiper/css/effect-fade';
 import './ProductModal.module.css';
 
 interface ProductModalProps {
@@ -19,7 +18,6 @@ interface ProductModalProps {
   onClose: () => void;
   products: Product[];
   title?: string;
-  subtitle?: string;
   initialSlideIndex?: number;
 }
 
@@ -84,7 +82,6 @@ export default function ProductModal({
   onClose,
   products,
   title = "Colección",
-  subtitle = "Productos disponibles",
   initialSlideIndex = 0
 }: ProductModalProps) {
   const [mounted, setMounted] = useState(false);
@@ -193,10 +190,6 @@ export default function ProductModal({
     onClose();
   }, [onClose]);
 
-  const toggleFullscreen = useCallback(() => {
-    // Funcionalidad removida para simplificar el modal
-  }, []);
-
   if (!mounted || !shouldRender) return null;
 
   return (
@@ -284,7 +277,7 @@ export default function ProductModal({
                 onSlideChange={(swiper) => setActiveSlide(swiper.realIndex)}
                 className="product-modal-swiper h-full"
               >
-                {products.map((product, index) => (
+                {products.map((product) => (
                   <SwiperSlide key={product.id} className="h-full">
                     <ProductSlide 
                       product={product}

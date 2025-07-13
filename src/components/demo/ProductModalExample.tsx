@@ -133,7 +133,7 @@ export default function ProductModalExample() {
           <div className="bg-neutral-800 rounded-lg p-6 border border-white/10">
             <h3 className="text-lg font-display text-white mb-4">Por Producto</h3>
             <div className="space-y-3">
-              {exampleProducts.map((product, index) => (
+              {exampleProducts.map((product) => (
                 <button
                   key={product.id}
                   onClick={() => openProductModal(product.id)}

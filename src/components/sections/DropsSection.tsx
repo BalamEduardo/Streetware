@@ -9,7 +9,7 @@ import { useProductModal, Product } from '../../hooks/useProductModal';
 
 export default function DropsSection() {
   // Hook para manejar el modal
-  const { isOpen, products, title, subtitle, openModal, closeModal } = useProductModal();
+  const { isOpen, products, title, openModal, closeModal } = useProductModal();
 
   // Drop actual - solo el más reciente
   const currentDrop = {
@@ -144,8 +144,7 @@ export default function DropsSection() {
   const handleViewCollection = () => {
     openModal(
       collectionProducts,
-      currentDrop.title,
-      `${currentDrop.subtitle} • ${collectionProducts.length} productos exclusivos`
+      `${currentDrop.title} • ${collectionProducts.length} productos exclusivos`
     );
   };
 
@@ -553,7 +552,6 @@ export default function DropsSection() {
         onClose={closeModal}
         products={products}
         title={title}
-        subtitle={subtitle}
       />
     </section>
   );
