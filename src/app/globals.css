@@ -1,9 +1,42 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Sedgwick+Ave+Display&display=swap');
 
+/* ===== CSS CUSTOM PROPERTIES ===== */
 :root {
+  /* Base Colors */
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Brand Colors */
+  --brand-primary: #171717;
+  --brand-accent: #fbbf24;
+  --brand-yellow: #fbbf24;
+  --brand-neutral: #262626;
+  
+  /* Spacing Scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  
+  /* Border Radius Scale */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  
+  /* Animation Timings */
+  --duration-fast: 0.15s;
+  --duration-normal: 0.3s;
+  --duration-slow: 0.5s;
+  
+  /* Easing Functions */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 @theme inline {
@@ -14,13 +47,16 @@
   --font-streetwear: var(--font-sedgwick-ave), "Sedgwick Ave Display", cursive;
 }
 
+/* ===== DARK MODE SUPPORT ===== */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --brand-neutral: #404040;
   }
 }
 
+/* ===== BASE STYLES ===== */
 body {
   background: var(--background);
   color: var(--foreground);
@@ -87,7 +123,8 @@ body {
   font-style: normal;
 }
 
-/* Animaciones para ProductModal */
+/* ===== CORE ANIMATIONS ===== */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -116,120 +153,6 @@ body {
   animation: slideIn 0.3s ease-out;
 }
 
-/* Estilos personalizados para pagination de Swiper en ProductModal */
-.swiper-pagination-bullet-product {
-  width: 8px !important;
-  height: 8px !important;
-  background: rgba(255, 255, 255, 0.4) !important;
-  border-radius: 50% !important;
-  opacity: 1 !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
-}
-
-.swiper-pagination-bullet-product-active {
-  background: #FFD600 !important;
-  transform: scale(1.2) !important;
-}
-
-/* Product Modal Swiper Styles */
-.product-modal-swiper {
-  --swiper-navigation-size: 20px;
-  --swiper-theme-color: #fff;
-  height: 100%;
-}
-
-.product-modal-swiper .swiper-wrapper {
-  height: 100%;
-}
-
-.product-modal-swiper .swiper-slide {
-  height: 100%;
-  overflow: hidden;
-}
-
-/* Pagination styles - visible dots at bottom */
-.product-modal-swiper .swiper-pagination {
-  bottom: 15px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  width: auto !important;
-  z-index: 30 !important;
-  position: absolute !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 8px !important;
-}
-
-.product-modal-swiper .swiper-pagination-bullet-product {
-  width: 10px !important;
-  height: 10px !important;
-  background: rgba(255, 255, 255, 0.5) !important;
-  border: 1px solid rgba(255, 255, 255, 0.7) !important;
-  opacity: 1 !important;
-  margin: 0 !important;
-  cursor: pointer !important;
-  transition: all 0.3s ease !important;
-  border-radius: 50% !important;
-  display: inline-block !important;
-}
-
-.product-modal-swiper .swiper-pagination-bullet-product-active {
-  background: #fff !important;
-  border-color: #fff !important;
-  transform: scale(1.2) !important;
-}
-
-.product-modal-swiper .swiper-button-disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-/* Mobile specific optimizations */
-@media (max-width: 1023px) {
-  .product-modal-swiper .swiper-pagination {
-    bottom: 10px !important;
-  }
-  
-  .product-modal-swiper .swiper-pagination-bullet-product {
-    width: 8px !important;
-    height: 8px !important;
-  }
-}
-
-/* Smooth transitions for product slides */
-.product-modal-swiper .swiper-slide {
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.product-modal-swiper .swiper-slide-active {
-  transform: scale(1);
-}
-
-.product-modal-swiper .swiper-slide-next,
-.product-modal-swiper .swiper-slide-prev {
-  transform: scale(0.98);
-}
-
-/* Remove default backdrop blur issues on mobile */
-@supports (-webkit-backdrop-filter: blur()) or (backdrop-filter: blur()) {
-  @media (min-width: 640px) {
-    .modal-backdrop-blur {
-      backdrop-filter: blur(8px);
-    }
-  }
-}
-
-/* Ensure proper text rendering on mobile */
-@media (max-width: 1023px) {
-  .product-modal-text {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-  }
-}
-
 /* Utilidades adicionales */
 .line-clamp-1 {
   overflow: hidden;
@@ -252,5 +175,166 @@ kbd {
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 0.75rem;
   font-weight: 500;
+}
+
+/* ===== SWIPER CUSTOMIZATIONS ===== */
+
+/* ProductModal Swiper Styles */
+.swiper-product-modal {
+  --swiper-theme-color: #fbbf24; /* brand-yellow */
+  --swiper-navigation-color: #ffffff;
+  --swiper-navigation-size: 28px;
+}
+
+.swiper-product-modal .swiper-button-next,
+.swiper-product-modal .swiper-button-prev {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  margin-top: -24px;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.swiper-product-modal .swiper-button-next:hover,
+.swiper-product-modal .swiper-button-prev:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05);
+}
+
+.swiper-product-modal .swiper-button-next.swiper-button-disabled,
+.swiper-product-modal .swiper-button-prev.swiper-button-disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* Hide navigation on mobile */
+@media (max-width: 1023px) {
+  .swiper-product-modal .swiper-button-next,
+  .swiper-product-modal .swiper-button-prev {
+    display: none;
+  }
+  
+  /* Hide pagination on mobile */
+  .swiper-product-modal .swiper-pagination {
+    display: none !important;
+  }
+}
+
+/* Pagination styles */
+.swiper-product-modal .swiper-pagination {
+  bottom: 16px;
+  z-index: 20;
+}
+
+.swiper-product-modal .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.swiper-product-modal .swiper-pagination-bullet-active {
+  background: var(--swiper-theme-color);
+  transform: scale(1.2);
+}
+
+/* Desktop pagination container */
+.swiper-pagination-desktop {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+/* Image Swiper Styles (for product images within slides) */
+.swiper-product-images {
+  --swiper-navigation-size: 20px;
+  --swiper-navigation-color: #ffffff;
+}
+
+.swiper-product-images .swiper-button-next,
+.swiper-product-images .swiper-button-prev {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  margin-top: -16px;
+  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.swiper-product-images .swiper-button-next:hover,
+.swiper-product-images .swiper-button-prev:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.swiper-product-images .swiper-pagination {
+  bottom: 12px;
+}
+
+.swiper-product-images .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+  margin: 0 3px;
+  transition: all 0.2s ease;
+}
+
+.swiper-product-images .swiper-pagination-bullet-active {
+  background: #ffffff;
+  transform: scale(1.25);
+}
+
+/* ===== PRODUCT GALLERY COMPONENT ===== */
+.swiper-product-gallery {
+  --swiper-theme-color: var(--brand-accent);
+  --swiper-navigation-color: #ffffff;
+  --swiper-navigation-size: 24px;
+}
+
+.swiper-product-gallery .swiper-button-next,
+.swiper-product-gallery .swiper-button-prev {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.swiper-product-gallery:hover .swiper-button-next,
+.swiper-product-gallery:hover .swiper-button-prev {
+  opacity: 1;
+}
+
+.swiper-product-gallery .swiper-button-next:hover,
+.swiper-product-gallery .swiper-button-prev:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
+}
+
+.swiper-thumbs .swiper-slide {
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.swiper-thumbs .swiper-slide-thumb-active {
+  opacity: 1;
+}
+
+.swiper-thumbs .swiper-slide:hover {
+  opacity: 0.8;
 }
 

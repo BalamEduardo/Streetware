@@ -50,6 +50,7 @@ export default function DropsSection() {
       price: '$1,299',
       description: 'Hoodie premium con diseño gráfico exclusivo inspirado en el arte urbano. Confeccionado en algodón orgánico de alta calidad.',
       category: 'Hoodies',
+      size: ['S', 'M', 'L', 'XL', 'XXL'],
       isNew: true,
       isAvailable: true,
       images: [
@@ -65,6 +66,7 @@ export default function DropsSection() {
       price: '$899',
       description: 'Camiseta de edición limitada con estampado artístico. Perfecta para expresar tu lado rebelde.',
       category: 'Camisetas',
+      size: ['XS', 'S', 'M', 'L', 'XL'],
       isNew: true,
       isAvailable: true,
       images: [
@@ -80,6 +82,7 @@ export default function DropsSection() {
       price: '$1,899',
       description: 'Chaqueta de mezclilla customizada con parches exclusivos. Diseño único que no pasará desapercibido.',
       category: 'Chaquetas',
+      size: ['S', 'M', 'L', 'XL'],
       isNew: true,
       isAvailable: true,
       images: [
@@ -95,6 +98,7 @@ export default function DropsSection() {
       price: '$1,399',
       description: 'Pantalones cargo con detalles únicos y múltiples bolsillos. Comodidad y estilo urbano.',
       category: 'Pantalones',
+      size: ['28', '30', '32', '34', '36'],
       isNew: false,
       isAvailable: false, // Agotado para mostrar variedad
       images: [
