@@ -1,12 +1,25 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function HeroSection() {
   return (
     <section 
       id="inicio" 
-      className="min-h-screen relative flex flex-col items-center justify-center text-center px-4 sm:px-6 bg-[url('/images/hero/Mobile_hero.jpg')] bg-cover bg-center bg-no-repeat md:bg-brand overflow-hidden"
+      className="min-h-screen relative flex flex-col items-center justify-center text-center px-4 sm:px-6 bg-brand overflow-hidden"
     >
+      {/* Imagen de fondo para Mobile */}
+      <div className="md:hidden absolute inset-0 z-0">
+        <Image
+          src="/images/hero/Background_HeroMobile.jpg"
+          alt=""
+          fill
+          className="object-cover object-center"
+          priority={true}
+          quality={90}
+        />
+      </div>
+
       {/* Video de fondo para Desktop */}
       <video
         className="
