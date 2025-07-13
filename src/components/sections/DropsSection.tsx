@@ -125,7 +125,7 @@ export default function DropsSection() {
         {/* Featured Drop Card - Diseño profesional */}
         <div className="
           max-w-3xl mx-auto
-          mb-4 sm:mb-6 md:mb-8
+         sm:mb-6 md:mb-8 
         ">
           <div className="
             group
@@ -145,9 +145,8 @@ export default function DropsSection() {
               <div className="
                 relative
                 w-full lg:w-3/5
-                min-h-[280px] sm:min-h-[320px] lg:min-h-[380px]
-                bg-gradient-to-br from-brand-accent/10 to-brand-yellow/10
                 overflow-hidden
+                mb-4 lg:mb-0
               ">
                 <ImageSlider
                   images={currentDrop.images}
@@ -223,18 +222,18 @@ export default function DropsSection() {
               {/* Contenido del Drop */}
               <div className="                
                 w-full lg:h-full lg:w-2/4
-                p-5 sm:p-6 lg:p-8
-                flex flex-col  justify-center
+                p-3 xs:p-4 sm:p-6 lg:p-8
+                flex flex-col justify-center
                 bg-neutral-900/30
               ">
                 {/* Header del Drop */}
-                <div className="mb-3 sm:mb-4">
+                <div className="mb-2 xs:mb-3 sm:mb-4">
                   <h3 className="
                     text-xl sm:text-2xl lg:text-3xl
                     font-display
                     text-white
                     tracking-wide
-                    mb-4
+                    mb-2 xs:mb-3 sm:mb-4
                     leading-tight
                   ">
                     {currentDrop.title}
@@ -270,7 +269,7 @@ export default function DropsSection() {
                   text-white/90
                   leading-relaxed
                   tracking-tight
-                  mb-3 sm:mb-4
+                  mb-2 xs:mb-3 sm:mb-4
                 ">
                   {currentDrop.description}
                 </p>
@@ -333,7 +332,7 @@ export default function DropsSection() {
                 <div className="
                   flex flex-col sm:flex-col
                   gap-2 sm:gap-3
-                  mt-8
+                  mt-3 xs:mt-4 sm:mt-8
                 ">
                   <Link
                     href={`/drops/${currentDrop.id}`}

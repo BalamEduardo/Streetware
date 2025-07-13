@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '380px', // Pantallas extra pequeñas a partir de 380px
+      },
       colors: {
         brand: {
           DEFAULT: "#171717",
