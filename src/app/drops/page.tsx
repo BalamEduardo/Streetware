@@ -248,7 +248,6 @@ export default function DropsPage() {
                       text-xs sm:text-sm
                       font-bold
                       rounded-full
-                      backdrop-blur-sm
                       ${getStatusStyles(drop.status)}
                     `}>
                       {drop.status}
