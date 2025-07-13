@@ -19,10 +19,10 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   
-  // Configuración adicional para rendimiento
-  experimental: {
-    optimizeCss: true,
-  },
+  // Configuración adicional para rendimiento (temporalmente deshabilitado)
+  // experimental: {
+  //   optimizeCss: true,
+  // },
   
   // Headers para optimización de caché
   async headers() {
