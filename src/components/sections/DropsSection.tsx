@@ -4,12 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ImageSlider from '../ui/ImageSlider';
-import ProductModal from '../ui/ProductModal';
-import { useProductModal, Product } from '../../hooks/useProductModal';
 
 export default function DropsSection() {
-  // Hook para manejar el modal
-  const { isOpen, products, title, openModal, closeModal } = useProductModal();
 
   // Drop actual - solo el más reciente
   const currentDrop = {
@@ -42,110 +38,12 @@ export default function DropsSection() {
     ]
   };
 
-  // Productos de la colección Urban Rebellion
-  const collectionProducts: Product[] = [
-    {
-      id: 'ur-hoodie-01',
-      name: 'Urban Rebellion Hoodie',
-      price: '$1,299',
-      description: 'Hoodie premium con diseño gráfico exclusivo inspirado en el arte urbano. Confeccionado en algodón orgánico de alta calidad.',
-      category: 'Hoodies',
-      size: ['S', 'M', 'L', 'XL', 'XXL'],
-      isNew: true,
-      isAvailable: true,
-      images: [
-        {
-          src: '/images/drops/DropsProducts/UrbanRebelion/UR1.jpg',
-          alt: 'Urban Rebellion Hoodie - Vista frontal'
-        }
-      ]
-    },
-    {
-      id: 'ur-tshirt-01',
-      name: 'Urban Rebellion Tee',
-      price: '$899',
-      description: 'Camiseta de edición limitada con estampado artístico. Perfecta para expresar tu lado rebelde.',
-      category: 'Camisetas',
-      size: ['XS', 'S', 'M', 'L', 'XL'],
-      isNew: true,
-      isAvailable: true,
-      images: [
-        {
-          src: '/images/drops/DropsProducts/UrbanRebelion/UR2.jpg',
-          alt: 'Urban Rebellion Tee - Vista frontal'
-        }
-      ]
-    },
-    {
-      id: 'ur-jacket-01',
-      name: 'Urban Rebellion Jacket',
-      price: '$1,899',
-      description: 'Chaqueta de mezclilla customizada con parches exclusivos. Diseño único que no pasará desapercibido.',
-      category: 'Chaquetas',
-      size: ['S', 'M', 'L', 'XL'],
-      isNew: true,
-      isAvailable: true,
-      images: [
-        {
-          src: '/images/drops/DropsProducts/UrbanRebelion/U3.jpg',
-          alt: 'Urban Rebellion Jacket - Vista completa'
-        }
-      ]
-    },
-    {
-      id: 'ur-pants-01',
-      name: 'Urban Rebellion Pants',
-      price: '$1,399',
-      description: 'Pantalones cargo con detalles únicos y múltiples bolsillos. Comodidad y estilo urbano.',
-      category: 'Pantalones',
-      size: ['28', '30', '32', '34', '36'],
-      isNew: false,
-      isAvailable: false, // Agotado para mostrar variedad
-      images: [
-        {
-          src: '/images/drops/DropsProducts/UrbanRebelion/UR1.jpg',
-          alt: 'Urban Rebellion Pants - Vista lateral'
-        }
-      ]
-    },
-    {
-      id: 'ur-accessories-01',
-      name: 'Urban Rebellion Cap',
-      price: '$599',
-      description: 'Gorra snapback con bordado exclusivo. El complemento perfecto para tu outfit urbano.',
-      category: 'Accesorios',
-      isNew: true,
-      isAvailable: true,
-      images: [
-        {
-          src: '/images/drops/DropsProducts/UrbanRebelion/UR2.jpg',
-          alt: 'Urban Rebellion Cap - Vista frontal'
-        }
-      ]
-    },
-    {
-      id: 'ur-shoes-01',
-      name: 'Urban Rebellion Sneakers',
-      price: '$2,299',
-      description: 'Sneakers de edición limitada colaboración exclusiva. Diseño futurista con toques urbanos.',
-      category: 'Calzado',
-      isNew: true,
-      isAvailable: true,
-      images: [
-        {
-          src: '/images/drops/DropsProducts/UrbanRebelion/U3.jpg',
-          alt: 'Urban Rebellion Sneakers - Par completo'
-        }
-      ]
-    }
-  ];
-
-  // Función para abrir el modal con la colección completa
+  // Función para navegar a la sección productos temporalmente
   const handleViewCollection = () => {
-    openModal(
-      collectionProducts,
-      `${currentDrop.title} • ${collectionProducts.length} productos exclusivos`
-    );
+    const productosSection = document.getElementById('productos');
+    if (productosSection) {
+      productosSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const getStatusStyles = (status: string) => {
@@ -545,14 +443,6 @@ export default function DropsSection() {
           </Link>
         </div>
       </div>
-
-      {/* Modal de Productos */}
-      <ProductModal
-        isOpen={isOpen}
-        onClose={closeModal}
-        products={products}
-        title={title}
-      />
     </section>
   );
 }

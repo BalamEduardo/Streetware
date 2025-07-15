@@ -23,26 +23,22 @@ const sedgwickAve = Sedgwick_Ave_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Streetware - Drop Season",
-  description: "Ropa y arte de edición limitada. Cada drop cuenta una historia.",
+  title: "Streetware - Premium Streetwear & Limited Edition Drops",
+  description: "Descubre streetwear premium con diseños exclusivos. Ropa urbana de edición limitada que define tu estilo.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="es" className={`${geistSans.variable} ${geistMono.variable} ${sedgwickAve.variable}`}>
       <body className="bg-brand text-white">
         <Navbar />
-        {/* Padding para que el contenido no quede debajo del navbar fijo */}
         <main className="min-h-screen">{children}</main>
-        
         <Footer />
       </body>
     </html>
-
-    
   );
 }

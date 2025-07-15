@@ -17,6 +17,7 @@ export interface Product {
   imageUrl?: string;
   stock: number;
   isLimited?: boolean;
+  slug?: string;
 }
 
 export type ProductCategory = 'camisetas' | 'hoodies' | 'accesorios';

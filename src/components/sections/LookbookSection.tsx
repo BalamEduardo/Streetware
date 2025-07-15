@@ -1,6 +1,15 @@
 import React from 'react';
+import Link from 'next/link';
 
-export default function LookbookSection() {
+interface LookbookSectionProps {
+  showAllImages?: boolean;
+  showTitle?: boolean;
+}
+
+export default function LookbookSection({ 
+  showAllImages = false, 
+  showTitle = true 
+}: LookbookSectionProps) {
   // Mock data para lookbook entries
   const lookbookItems = [
     {
@@ -47,6 +56,9 @@ export default function LookbookSection() {
     }
   ];
 
+  // En modo preview, solo mostrar los primeros 3 elementos
+  const displayItems = showAllImages ? lookbookItems : lookbookItems.slice(0, 3);
+
   return (
     <section 
       id="lookbook" 
@@ -61,40 +73,27 @@ export default function LookbookSection() {
       <div className="max-w-7xl mx-auto">
         
         {/* Header de la sección */}
-        <div className="
-          text-center 
-          mb-8 sm:mb-12 md:mb-16
-        ">
-          <h2 className="
-            text-2xl leading-tight
-            sm:text-3xl sm:leading-tight
-            md:text-4xl md:leading-tight
-            lg:text-5xl lg:leading-tight
-            font-display
-            text-brand-accent
-            tracking-wider
-            mb-3 sm:mb-4 md:mb-6
+        {showTitle && (
+          <div className="
+            text-center 
+            mb-8 sm:mb-12 md:mb-16
           ">
-            LOOKBOOK
-          </h2>
+            <h2 className="
+              text-2xl leading-tight
+              sm:text-3xl sm:leading-tight
+              md:text-4xl md:leading-tight
+              lg:text-5xl lg:leading-tight
+              font-display
+              text-brand-accent
+              tracking-wider
+              mb-3 sm:mb-4 md:mb-6
+            ">
+              {showAllImages ? 'LOOKBOOK COMPLETO' : 'LOOKBOOK'}
+            </h2>
           
-          <p className="
-            text-sm leading-relaxed
-            sm:text-base sm:leading-relaxed
-            md:text-lg md:leading-relaxed
-            lg:text-xl lg:leading-relaxed
-            font-body
-            text-white/90
-            max-w-xs sm:max-w-sm md:max-w-2xl
-            mx-auto
-          ">
-            Inspiración streetwear para cada momento.
-            <br className="hidden sm:block" />
-            <span className="text-brand-yellow font-semibold">
-              Descubre nuevas formas de expresar tu estilo.
-            </span>
-          </p>
-        </div>
+          
+          </div>
+        )}
 
         {/* Grid de Lookbook Items */}
         <div className="
@@ -103,7 +102,7 @@ export default function LookbookSection() {
           lg:grid-cols-3
           gap-4 sm:gap-6 md:gap-8
         ">
-          {lookbookItems.map((item) => (
+          {displayItems.map((item) => (
             <div
               key={item.id}
               className="
@@ -206,30 +205,38 @@ export default function LookbookSection() {
         </div>
 
         {/* CTA para ver más */}
-        <div className="
-          text-center
-          mt-8 sm:mt-12 md:mt-16
-        ">
-          <button className="
-            inline-flex items-center
-            px-6 py-3
-            sm:px-8 sm:py-4
-            md:px-10 md:py-4
-            border-2 border-brand-accent
-            text-brand-accent
-            text-sm sm:text-base md:text-lg
-            font-bold
-            uppercase
-            tracking-wide
-            rounded-lg
-            hover:bg-brand-accent
-            hover:text-white
-            transition-all duration-300
-            active:scale-95
+        {!showAllImages && (
+          <div className="
+            text-center
+            mt-8 sm:mt-12 md:mt-16
           ">
-            Ver Más Inspiración
-          </button>
-        </div>
+            <Link
+              href="/lookbook"
+              className="
+                inline-flex items-center gap-2
+                px-6 py-3
+                sm:px-8 sm:py-4
+                md:px-10 md:py-4
+                border-2 border-brand-accent
+                text-brand-accent
+                text-sm sm:text-base md:text-lg
+                font-bold
+                uppercase
+                tracking-wide
+                rounded-lg
+                hover:bg-brand-accent
+                hover:text-white
+                transition-all duration-300
+                active:scale-95
+              "
+            >
+              Ver Lookbook Completo
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
