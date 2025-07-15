@@ -11,9 +11,6 @@ export default function Navbar() {
     { href: '#drops', label: 'Drops' },
     { href: '#productos', label: 'Productos' },
     { href: '#lookbook', label: 'Lookbook' },
-    { href: '#tallas', label: 'Tallas' },
-    { href: '#nosotros', label: 'Nosotros' },
-    { href: '#contacto', label: 'Contacto' },
   ];
 
   const handleLinkClick = () => {
