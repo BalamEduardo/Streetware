@@ -8,7 +8,7 @@ export default function HeroSection() {
   const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const hasStartedRef = useRef(false); // Flag para saber si ya empezó por primera vez
   const isFirstLoopRef = useRef(true); // Flag para distinguir el primer loop de los siguientes
-  const [videoLoaded, setVideoLoaded] = useState(false); // Estado para controlar la visibilidad
+  const [videoReady, setVideoReady] = useState(false); // Estado para mostrar el video solo cuando esté listo
 
   useEffect(() => {
     const video = mobileVideoRef.current;
@@ -17,35 +17,21 @@ export default function HeroSection() {
       video.setAttribute('playsinline', 'true');
       video.setAttribute('webkit-playsinline', 'true');
       
-      // Timeout de seguridad para Safari - mostrar video después de 2 segundos si no se ha cargado
-      const safariTimeout = setTimeout(() => {
-        if (!videoLoaded) {
-          console.log('Safari timeout: showing video anyway');
-          setVideoLoaded(true);
-        }
-      }, 2000);
-      
       const handleLoadedMetadata = () => {
-        // Solo establecer 0.7 en la primera carga
+        // Solo establecer 0.20 en la primera carga
         if (!hasStartedRef.current) {
-          console.log('Video metadata loaded, setting currentTime to 0.7 (first load)');
-          video.currentTime = 0.7;
+          console.log('Video metadata loaded, setting currentTime to 0.20 (first load)');
+          video.currentTime = 0.50;
           hasStartedRef.current = true;
         }
-      };
-
-      const handleLoadedData = () => {
-        // Cuando el video esté completamente cargado y listo para reproducir
-        console.log('Video data loaded, ready to show');
-        setVideoLoaded(true);
       };
 
       const handleSeeked = () => {
         // Confirmar que el video se posicionó correctamente
         console.log('Video seeked to:', video.currentTime);
-        // Asegurar que el video sea visible después de posicionarse
-        if (!videoLoaded) {
-          setVideoLoaded(true);
+        // Solo mostrar el video cuando esté en la posición correcta (0.50)
+        if (video.currentTime >= 0.49 && !videoReady) {
+          setVideoReady(true);
         }
       };
 
@@ -53,29 +39,21 @@ export default function HeroSection() {
         // Intentar reproducir siempre, especialmente para Safari
         console.log('Starting video playback from second:', video.currentTime);
         
-        // Asegurar que el video sea visible antes de reproducir
-        setVideoLoaded(true);
-        
         const playPromise = video.play();
         
         if (playPromise !== undefined) {
           playPromise
             .then(() => {
               console.log('Video started successfully');
-              setVideoLoaded(true); // Garantizar visibilidad
             })
             .catch(error => {
               console.log('Error al reproducir el video:', error);
               // Fallback: intentar reproducir después de una interacción del usuario
               const startOnTouch = () => {
-                setVideoLoaded(true); // Mostrar video antes de reproducir
                 video.play().then(() => {
                   console.log('Video started after user interaction');
                   document.removeEventListener('touchstart', startOnTouch);
                   document.removeEventListener('click', startOnTouch);
-                }).catch(() => {
-                  // Si aún falla, mantener la imagen
-                  setVideoLoaded(false);
                 });
               };
               document.addEventListener('touchstart', startOnTouch);
@@ -85,45 +63,34 @@ export default function HeroSection() {
       };
 
       const handleTimeUpdate = () => {
-        if (isFirstLoopRef.current) {
-          // En el primer loop: terminar 0.6 segundos antes del final y reiniciar desde 0
-          if (video.currentTime >= video.duration - 0.3) {
-            console.log('First loop ending, restarting from 0');
-            video.currentTime = 0;
-            isFirstLoopRef.current = false; // Ya no es el primer loop
-          }
-        } else {
-          // En loops siguientes: terminar 0.6 segundos antes del final y reiniciar desde 0
-          if (video.currentTime >= video.duration - 0.3) {
-            console.log('Loop ending, restarting from 0');
-            video.currentTime = 0;
-          }
-        }
+        // No hacer nada aquí para evitar bucles, usar evento 'ended' en su lugar
+      };
+
+      const handleEnded = () => {
+        console.log('Video ended, restarting from 0');
+        video.currentTime = 0;
+        video.play();
       };
 
       // Escuchar eventos en el orden correcto
       video.addEventListener('loadedmetadata', handleLoadedMetadata);
-      video.addEventListener('loadeddata', handleLoadedData);
       video.addEventListener('seeked', handleSeeked);
       video.addEventListener('canplay', handleCanPlay);
       video.addEventListener('timeupdate', handleTimeUpdate);
+      video.addEventListener('ended', handleEnded);
       
       // Si el video ya está cargado cuando se monta el componente
       if (video.readyState >= 1) {
         handleLoadedMetadata();
       }
-      if (video.readyState >= 2) {
-        handleLoadedData();
-      }
       
       // Cleanup
       return () => {
-        clearTimeout(safariTimeout);
         video.removeEventListener('loadedmetadata', handleLoadedMetadata);
-        video.removeEventListener('loadeddata', handleLoadedData);
         video.removeEventListener('seeked', handleSeeked);
         video.removeEventListener('canplay', handleCanPlay);
         video.removeEventListener('timeupdate', handleTimeUpdate);
+        video.removeEventListener('ended', handleEnded);
       };
     }
   }, []);
@@ -133,37 +100,14 @@ export default function HeroSection() {
       id="inicio" 
       className="min-h-screen relative flex flex-col items-center justify-center text-center px-4 sm:px-6 bg-brand overflow-hidden"
     >
-      {/* Video de fondo para Mobile */}
-      <video
-        ref={mobileVideoRef}
-        className={`
-          md:hidden
-          absolute inset-0 w-full h-full object-cover z-0
-          transition-opacity duration-500 ease-in-out
-          ${videoLoaded ? 'opacity-100' : 'opacity-0'}
-        `}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        poster="/images/hero/Background_HeroMobile.jpg"
-        webkit-playsinline="true"
-        controls={false}
-      >
-        <source src="/videos/hero/Prueba3.mp4" type="video/mp4" />
-        {/* Fallback para navegadores que no soporten video */}
-        Tu navegador no soporta el elemento video.
-      </video>
-
-      {/* Imagen de fondo como fallback para Mobile (transición suave) */}
+      {/* Imagen de fallback visible hasta que el video esté listo */}
       <div className={`
         md:hidden absolute inset-0 z-[-1]
-        transition-opacity duration-500 ease-in-out
-        ${videoLoaded ? 'opacity-0' : 'opacity-100'}
+        transition-opacity duration-300 ease-in-out
+        ${videoReady ? 'opacity-0' : 'opacity-100'}
       `}>
         <Image
-          src="/images/hero/Background_HeroMobile.jpg"
+          src="/images/hero/BackGround.png"
           alt="Imagen de fondo del hero para dispositivos móviles"
           fill
           className="object-cover object-center"
@@ -171,6 +115,61 @@ export default function HeroSection() {
           quality={85}
         />
       </div>
+
+      {/* Video de fondo para Mobile */}
+      <video
+        ref={mobileVideoRef}
+        className={`
+          md:hidden
+          absolute inset-0 w-full h-full object-cover z-0
+          transition-opacity duration-300 ease-in-out
+          ${videoReady ? 'opacity-100' : 'opacity-0'}
+        `}
+        style={{
+          /* Ocultar controles nativos y botón de play */
+          WebkitAppearance: 'none',
+          /* Ocultar overlay de play en webkit/safari */
+          WebkitMediaControls: 'none',
+          WebkitMediaControlsPanel: 'none',
+          WebkitMediaControlsPlayButton: 'none',
+          WebkitMediaControlsStartPlaybackButton: 'none',
+          /* Para otros navegadores */
+          pointerEvents: 'none'
+        } as React.CSSProperties}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster="/images/hero/BackGround.png"
+        webkit-playsinline="true"
+        controls={false}
+        disablePictureInPicture
+        disableRemotePlayback
+        x-webkit-airplay="deny"
+      >
+        <source src="/videos/hero/Prueba4.mp4" type="video/mp4" />
+        {/* Fallback para navegadores que no soporten video */}
+        Tu navegador no soporta el elemento video.
+      </video>
+
+      {/* Overlay invisible para capturar toques en el video */}
+      <div 
+        className="md:hidden absolute inset-0 z-[1] pointer-events-auto"
+        style={{ background: 'transparent' }}
+        onClick={() => {
+          const video = mobileVideoRef.current;
+          if (video && video.paused) {
+            video.play().catch(console.log);
+          }
+        }}
+        onTouchStart={() => {
+          const video = mobileVideoRef.current;
+          if (video && video.paused) {
+            video.play().catch(console.log);
+          }
+        }}
+      />
 
       {/* Video de fondo para Desktop */}
       <video
