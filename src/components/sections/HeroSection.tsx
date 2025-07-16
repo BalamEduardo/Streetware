@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function HeroSection() {
   const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const hasStartedRef = useRef(false); // Flag para saber si ya empezó por primera vez
+  const isFirstLoopRef = useRef(true); // Flag para distinguir el primer loop de los siguientes
+  const [videoLoaded, setVideoLoaded] = useState(false); // Estado para controlar la visibilidad
 
   useEffect(() => {
     const video = mobileVideoRef.current;
@@ -16,12 +18,18 @@ export default function HeroSection() {
       video.setAttribute('webkit-playsinline', 'true');
       
       const handleLoadedMetadata = () => {
-        // Solo establecer 0.6 en la primera carga
+        // Solo establecer 0.7 en la primera carga
         if (!hasStartedRef.current) {
-          console.log('Video metadata loaded, setting currentTime to 0.6 (first load)');
-          video.currentTime = 0.6;
+          console.log('Video metadata loaded, setting currentTime to 0.7 (first load)');
+          video.currentTime = 0.7;
           hasStartedRef.current = true;
         }
+      };
+
+      const handleLoadedData = () => {
+        // Cuando el video esté completamente cargado y listo para reproducir
+        console.log('Video data loaded, ready to show');
+        setVideoLoaded(true);
       };
 
       const handleSeeked = () => {
@@ -56,15 +64,25 @@ export default function HeroSection() {
       };
 
       const handleTimeUpdate = () => {
-        // Terminar el video 0.6 segundos antes del final
-        if (video.currentTime >= video.duration - 0.7) {
-          console.log('Video near end, restarting from 0.6');
-          video.currentTime = 0.6; // Reiniciar desde 0.6 segundos
+        if (isFirstLoopRef.current) {
+          // En el primer loop: terminar 0.6 segundos antes del final y reiniciar desde 0
+          if (video.currentTime >= video.duration - 0.3) {
+            console.log('First loop ending, restarting from 0');
+            video.currentTime = 0;
+            isFirstLoopRef.current = false; // Ya no es el primer loop
+          }
+        } else {
+          // En loops siguientes: terminar 0.6 segundos antes del final y reiniciar desde 0
+          if (video.currentTime >= video.duration - 0.3) {
+            console.log('Loop ending, restarting from 0');
+            video.currentTime = 0;
+          }
         }
       };
 
       // Escuchar eventos en el orden correcto
       video.addEventListener('loadedmetadata', handleLoadedMetadata);
+      video.addEventListener('loadeddata', handleLoadedData);
       video.addEventListener('seeked', handleSeeked);
       video.addEventListener('canplay', handleCanPlay);
       video.addEventListener('timeupdate', handleTimeUpdate);
@@ -73,10 +91,14 @@ export default function HeroSection() {
       if (video.readyState >= 1) {
         handleLoadedMetadata();
       }
+      if (video.readyState >= 2) {
+        handleLoadedData();
+      }
       
       // Cleanup
       return () => {
         video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        video.removeEventListener('loadeddata', handleLoadedData);
         video.removeEventListener('seeked', handleSeeked);
         video.removeEventListener('canplay', handleCanPlay);
         video.removeEventListener('timeupdate', handleTimeUpdate);
@@ -92,11 +114,12 @@ export default function HeroSection() {
       {/* Video de fondo para Mobile */}
       <video
         ref={mobileVideoRef}
-        className="
+        className={`
           md:hidden
           absolute inset-0 w-full h-full object-cover z-0
-        "
-        autoPlay
+          transition-opacity duration-300 ease-in-out
+          ${videoLoaded ? 'opacity-100' : 'opacity-0'}
+        `}
         muted
         loop
         playsInline
@@ -109,15 +132,19 @@ export default function HeroSection() {
         Tu navegador no soporta el elemento video.
       </video>
 
-      {/* Imagen de fondo como fallback para Mobile (si el video falla) */}
-      <div className="md:hidden absolute inset-0 z-[-1]">
+      {/* Imagen de fondo como fallback para Mobile (transición suave) */}
+      <div className={`
+        md:hidden absolute inset-0 z-[-1]
+        transition-opacity duration-300 ease-in-out
+        ${videoLoaded ? 'opacity-0' : 'opacity-100'}
+      `}>
         <Image
           src="/images/hero/Background_HeroMobile.jpg"
           alt="Imagen de fondo del hero para dispositivos móviles"
           fill
           className="object-cover object-center"
           priority={true}
-          quality={70}
+          quality={85}
         />
       </div>
 
