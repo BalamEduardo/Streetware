@@ -17,10 +17,10 @@ export default function HeroSection() {
       video.setAttribute('webkit-playsinline', 'true');
       
       const handleLoadedMetadata = () => {
-        // Solo establecer 0.20 en la primera carga
+        // Solo establecer 4 segundos en la primera carga
         if (!hasStartedRef.current) {
-          console.log('Video metadata loaded, setting currentTime to 0.20 (first load)');
-          video.currentTime = 0.50;
+          console.log('Video metadata loaded, setting currentTime to 4 (first load)');
+          video.currentTime = 1;
           hasStartedRef.current = true;
         }
       };
@@ -28,13 +28,20 @@ export default function HeroSection() {
       const handleSeeked = () => {
         // Confirmar que el video se posicionó correctamente
         console.log('Video seeked to:', video.currentTime);
-        // Solo mostrar el video cuando esté en la posición correcta (0.50)
-        if (video.currentTime >= 0.49 && !videoReady) {
+        // Solo mostrar el video cuando esté en el segundo 4 o muy cerca
+        if (video.currentTime >= 0.9 && !videoReady) {
           setVideoReady(true);
         }
       };
 
       const handleCanPlay = () => {
+        // Para Safari, asegurar que esté en el segundo correcto antes de reproducir
+        if (video.currentTime < 0.9 && !hasStartedRef.current) {
+          console.log('Safari fix: Setting currentTime to 1 before play');
+          video.currentTime = 1;
+          hasStartedRef.current = true;
+        }
+        
         // Intentar reproducir siempre, especialmente para Safari
         console.log('Starting video playback from second:', video.currentTime);
         
@@ -102,11 +109,11 @@ export default function HeroSection() {
       {/* Imagen de fallback visible hasta que el video esté listo */}
       <div className={`
         md:hidden absolute inset-0 z-[-1]
-        transition-opacity duration-300 ease-in-out
+        transition-opacity duration-600 ease-in-out
         ${videoReady ? 'opacity-0' : 'opacity-100'}
       `}>
         <Image
-          src="/images/hero/BackGround.png"
+          src="/images/hero/BackGround.png?v=2"
           alt="Imagen de fondo del hero para dispositivos móviles"
           fill
           className="object-cover object-center"
@@ -140,7 +147,7 @@ export default function HeroSection() {
         loop
         playsInline
         preload="auto"
-        poster="/images/hero/BackGround.png"
+        poster="/images/hero/BackGround.png?v=2"
         webkit-playsinline="true"
         controls={false}
         disablePictureInPicture
