@@ -1,8 +1,69 @@
-import React from 'react';
+"use client";
+
+import React, { useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function HeroSection() {
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
+  const hasStartedRef = useRef(false); // Flag para saber si ya empezó por primera vez
+
+  useEffect(() => {
+    const video = mobileVideoRef.current;
+    if (video) {
+      const handleLoadedMetadata = () => {
+        // Solo establecer 0.6 en la primera carga
+        if (!hasStartedRef.current) {
+          console.log('Video metadata loaded, setting currentTime to 0.6 (first load)');
+          video.currentTime = 0.6;
+          hasStartedRef.current = true;
+        }
+      };
+
+      const handleSeeked = () => {
+        // Confirmar que el video se posicionó correctamente
+        console.log('Video seeked to:', video.currentTime);
+      };
+
+      const handleCanPlay = () => {
+        // Solo reproducir si no se está ya reproduciendo
+        if (video.paused) {
+          console.log('Starting video playback from second:', video.currentTime);
+          video.play().catch(error => {
+            console.log('Error al reproducir el video:', error);
+          });
+        }
+      };
+
+      const handleTimeUpdate = () => {
+        // Terminar el video 0.6 segundos antes del final
+        if (video.currentTime >= video.duration - 0.7) {
+          console.log('Video near end, restarting from 0.6');
+          video.currentTime = 0.6; // Reiniciar desde 0.6 segundos
+        }
+      };
+
+      // Escuchar eventos en el orden correcto
+      video.addEventListener('loadedmetadata', handleLoadedMetadata);
+      video.addEventListener('seeked', handleSeeked);
+      video.addEventListener('canplay', handleCanPlay);
+      video.addEventListener('timeupdate', handleTimeUpdate);
+      
+      // Si el video ya está cargado cuando se monta el componente
+      if (video.readyState >= 1) {
+        handleLoadedMetadata();
+      }
+      
+      // Cleanup
+      return () => {
+        video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        video.removeEventListener('seeked', handleSeeked);
+        video.removeEventListener('canplay', handleCanPlay);
+        video.removeEventListener('timeupdate', handleTimeUpdate);
+      };
+    }
+  }, []);
+
   return (
     <section 
       id="inicio" 
@@ -10,18 +71,18 @@ export default function HeroSection() {
     >
       {/* Video de fondo para Mobile */}
       <video
+        ref={mobileVideoRef}
         className="
           md:hidden
           absolute inset-0 w-full h-full object-cover z-0
         "
-        autoPlay
         muted
         loop
         playsInline
         preload="metadata"
         poster="/images/hero/Background_HeroMobile.jpg"
       >
-        <source src="/videos/hero/Prueba2.mp4" type="video/mp4" />
+        <source src="/videos/hero/Prueba3.mp4" type="video/mp4" />
         {/* Fallback para navegadores que no soporten video */}
         Tu navegador no soporta el elemento video.
       </video>
