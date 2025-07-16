@@ -113,7 +113,7 @@ export default function HeroSection() {
         ${videoReady ? 'opacity-0' : 'opacity-100'}
       `}>
         <Image
-          src="/images/hero/BackGround.png?v=2"
+          src="/images/hero/BackGround.webp?v=2"
           alt="Imagen de fondo del hero para dispositivos móviles"
           fill
           className="object-cover object-center"
@@ -147,7 +147,7 @@ export default function HeroSection() {
         loop
         playsInline
         preload="auto"
-        poster="/images/hero/BackGround.png?v=2"
+        poster="/images/hero/BackGround.webp?v=2"
         webkit-playsinline="true"
         controls={false}
         disablePictureInPicture
