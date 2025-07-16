@@ -17,6 +17,14 @@ export default function HeroSection() {
       video.setAttribute('playsinline', 'true');
       video.setAttribute('webkit-playsinline', 'true');
       
+      // Timeout de seguridad para Safari - mostrar video después de 2 segundos si no se ha cargado
+      const safariTimeout = setTimeout(() => {
+        if (!videoLoaded) {
+          console.log('Safari timeout: showing video anyway');
+          setVideoLoaded(true);
+        }
+      }, 2000);
+      
       const handleLoadedMetadata = () => {
         // Solo establecer 0.7 en la primera carga
         if (!hasStartedRef.current) {
@@ -35,26 +43,39 @@ export default function HeroSection() {
       const handleSeeked = () => {
         // Confirmar que el video se posicionó correctamente
         console.log('Video seeked to:', video.currentTime);
+        // Asegurar que el video sea visible después de posicionarse
+        if (!videoLoaded) {
+          setVideoLoaded(true);
+        }
       };
 
       const handleCanPlay = () => {
         // Intentar reproducir siempre, especialmente para Safari
         console.log('Starting video playback from second:', video.currentTime);
+        
+        // Asegurar que el video sea visible antes de reproducir
+        setVideoLoaded(true);
+        
         const playPromise = video.play();
         
         if (playPromise !== undefined) {
           playPromise
             .then(() => {
               console.log('Video started successfully');
+              setVideoLoaded(true); // Garantizar visibilidad
             })
             .catch(error => {
               console.log('Error al reproducir el video:', error);
               // Fallback: intentar reproducir después de una interacción del usuario
               const startOnTouch = () => {
+                setVideoLoaded(true); // Mostrar video antes de reproducir
                 video.play().then(() => {
                   console.log('Video started after user interaction');
                   document.removeEventListener('touchstart', startOnTouch);
                   document.removeEventListener('click', startOnTouch);
+                }).catch(() => {
+                  // Si aún falla, mantener la imagen
+                  setVideoLoaded(false);
                 });
               };
               document.addEventListener('touchstart', startOnTouch);
@@ -97,6 +118,7 @@ export default function HeroSection() {
       
       // Cleanup
       return () => {
+        clearTimeout(safariTimeout);
         video.removeEventListener('loadedmetadata', handleLoadedMetadata);
         video.removeEventListener('loadeddata', handleLoadedData);
         video.removeEventListener('seeked', handleSeeked);
@@ -117,15 +139,17 @@ export default function HeroSection() {
         className={`
           md:hidden
           absolute inset-0 w-full h-full object-cover z-0
-          transition-opacity duration-300 ease-in-out
+          transition-opacity duration-500 ease-in-out
           ${videoLoaded ? 'opacity-100' : 'opacity-0'}
         `}
+        autoPlay
         muted
         loop
         playsInline
         preload="auto"
         poster="/images/hero/Background_HeroMobile.jpg"
         webkit-playsinline="true"
+        controls={false}
       >
         <source src="/videos/hero/Prueba3.mp4" type="video/mp4" />
         {/* Fallback para navegadores que no soporten video */}
@@ -135,7 +159,7 @@ export default function HeroSection() {
       {/* Imagen de fondo como fallback para Mobile (transición suave) */}
       <div className={`
         md:hidden absolute inset-0 z-[-1]
-        transition-opacity duration-300 ease-in-out
+        transition-opacity duration-500 ease-in-out
         ${videoLoaded ? 'opacity-0' : 'opacity-100'}
       `}>
         <Image
