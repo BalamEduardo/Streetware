@@ -8,8 +8,26 @@ export default function HeroSection() {
       id="inicio" 
       className="min-h-screen relative flex flex-col items-center justify-center text-center px-4 sm:px-6 bg-brand overflow-hidden"
     >
-      {/* Imagen de fondo para Mobile */}
-      <div className="md:hidden absolute inset-0 z-0">
+      {/* Video de fondo para Mobile */}
+      <video
+        className="
+          md:hidden
+          absolute inset-0 w-full h-full object-cover z-0
+        "
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/images/hero/Background_HeroMobile.jpg"
+      >
+        <source src="/videos/hero/Prueba2.mp4" type="video/mp4" />
+        {/* Fallback para navegadores que no soporten video */}
+        Tu navegador no soporta el elemento video.
+      </video>
+
+      {/* Imagen de fondo como fallback para Mobile (si el video falla) */}
+      <div className="md:hidden absolute inset-0 z-[-1]">
         <Image
           src="/images/hero/Background_HeroMobile.jpg"
           alt="Imagen de fondo del hero para dispositivos móviles"
@@ -30,11 +48,14 @@ export default function HeroSection() {
         muted
         loop
         playsInline
+        preload="metadata"
       >
         <source src="/videos/hero/Video_Hero.mp4" type="video/mp4" />
+        {/* Fallback para navegadores que no soporten video */}
+        Tu navegador no soporta el elemento video.
       </video>
 
-      {/* Overlay Mobile - Solo para imagen */}
+      {/* Overlay Mobile - Para video e imagen de fallback */}
       <div className="
         absolute inset-0 z-10
         bg-black/40
@@ -46,7 +67,6 @@ export default function HeroSection() {
         hidden md:block
         absolute inset-0 z-10
         bg-black/40
-        
       " />
 
       {/* Blur Layer - Aplicado sobre los overlays */}
