@@ -11,6 +11,10 @@ export default function HeroSection() {
   useEffect(() => {
     const video = mobileVideoRef.current;
     if (video) {
+      // Agregar atributos específicos para iOS/Safari
+      video.setAttribute('playsinline', 'true');
+      video.setAttribute('webkit-playsinline', 'true');
+      
       const handleLoadedMetadata = () => {
         // Solo establecer 0.6 en la primera carga
         if (!hasStartedRef.current) {
@@ -26,12 +30,28 @@ export default function HeroSection() {
       };
 
       const handleCanPlay = () => {
-        // Solo reproducir si no se está ya reproduciendo
-        if (video.paused) {
-          console.log('Starting video playback from second:', video.currentTime);
-          video.play().catch(error => {
-            console.log('Error al reproducir el video:', error);
-          });
+        // Intentar reproducir siempre, especialmente para Safari
+        console.log('Starting video playback from second:', video.currentTime);
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log('Video started successfully');
+            })
+            .catch(error => {
+              console.log('Error al reproducir el video:', error);
+              // Fallback: intentar reproducir después de una interacción del usuario
+              const startOnTouch = () => {
+                video.play().then(() => {
+                  console.log('Video started after user interaction');
+                  document.removeEventListener('touchstart', startOnTouch);
+                  document.removeEventListener('click', startOnTouch);
+                });
+              };
+              document.addEventListener('touchstart', startOnTouch);
+              document.addEventListener('click', startOnTouch);
+            });
         }
       };
 
@@ -76,11 +96,13 @@ export default function HeroSection() {
           md:hidden
           absolute inset-0 w-full h-full object-cover z-0
         "
+        autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
         poster="/images/hero/Background_HeroMobile.jpg"
+        webkit-playsinline="true"
       >
         <source src="/videos/hero/Prueba3.mp4" type="video/mp4" />
         {/* Fallback para navegadores que no soporten video */}
