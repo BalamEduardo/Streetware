@@ -7,7 +7,6 @@ import Image from 'next/image';
 export default function HeroSection() {
   const mobileVideoRef = useRef<HTMLVideoElement>(null);
   const hasStartedRef = useRef(false); // Flag para saber si ya empezó por primera vez
-  const isFirstLoopRef = useRef(true); // Flag para distinguir el primer loop de los siguientes
   const [videoReady, setVideoReady] = useState(false); // Estado para mostrar el video solo cuando esté listo
 
   useEffect(() => {
@@ -93,7 +92,7 @@ export default function HeroSection() {
         video.removeEventListener('ended', handleEnded);
       };
     }
-  }, []);
+  }, [videoReady]);
 
   return (
     <section 
